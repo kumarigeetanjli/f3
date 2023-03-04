@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+body
+{
+    background-color: black;
+    
+    color:white;
+}
+
+#btc
+{
+    background-color: white;
+    color:black;
+}
+
+#con
+{
+    display:flex;
+    flex-wrap: wrap;
+    height: 280px;
+    width: 280px;
+   
+}
+
+
+#smain
+{
+    display:flex;
+    flex-wrap: wrap;
+    height: 400px;
+    width: 1200px;
+    
+}
+
+
+#btc{
+  position: absolute;
+  top:80px;
+  
+  height:35px;
+  width:120px;
+  
+ 
+}
+a
+{
+    color: aquamarine;
+    height:20;
+}
+</style>
+<body>
+    <p>Store</p>
+    
+    <p>Searches</p>
+    <button id="btc">Clear</button>
+
+
+<a href="./searched.html">Searched</a>
+<br>
+<a href="./index.html">Landing</a>
+    <div id="con"></div>
+    <div id="smain"></div>
+</body>
+<script >
+fetch('https://www.googleapis.com/books/v1/volumes?q=percy+jackson').then((apidata)=>{
+     console.log(apidata);
+
+      return apidata.json();
+
+        })
+
+.then((actualdata)=>{
+ 
+ let mindiv=document.getElementById("smain")
+         console.log(actualdata);
+  let count=0;
+  
+let clear=document.getElementById("btc");
+  let major=document.getElementById("con");
+let data = JSON.parse(localStorage.getItem('data'));
+
+let k=0;
+data.forEach((item)=> {
+    let cr=document.createElement('div');
+    cr.innerHTML=`
+    ${k} ${data[k].search}  &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp    search at  ${data[k].date}
+   
+    
+    
+    `
+
+    //k++;let 
+    var searchvalue=data[k].search;
+    cr.style.border="3px solid grey";
+    cr.style.width="930px";
+    cr.style.height="30px";
+    
+  major.append(cr);
+
+             cr.addEventListener("click",()=>{
+              mindiv.innerHTML="";
+              for(let j=0;j<10;j++)
+  
+  {
+          let data=actualdata.items[j];
+          
+          
+         if(data.volumeInfo.title.toLowerCase().split(" ").join("").includes(searchvalue.toLowerCase().split(" ").join(""))|| data.volumeInfo.authors[0].toLowerCase().split(" ").join("").includes(searchvalue.toLowerCase().split(" ").join("")))
+     
+        
+        {
+           
+            let sk=document.createElement('div');
+          
+            sk.innerHTML=`
+          
+            <img src=${data.volumeInfo.imageLinks.thumbnail} height="180" width="180" alt="not"   /> 
+            <br>
+            Title: ${data.volumeInfo.title}
+            <br>
+            
+            <br>
+            writer  ${data.volumeInfo.authors[0]}
+            <br>
+            
+            Rating on 5 :${data.volumeInfo.averageRating}
+            <br>
+            
+            
+            
+            `
+           // cr.append(btn);
+        sk.style.height="380px";
+            sk.style.width="380px";
+            
+            
+            sk.style.borderRadius="4px";
+            sk.style.borderColor="grey"
+            sk.style.display="block";
+          
+            sk.style.borderColor="white";
+            sk.style.backgroundColor="grey";
+            sk.style.color="grey";
+           
+         mindiv.append(cr);
+  major.append(mindiv);
+
+
+
+
+
+
+
+         }
+
+       }
+       
+
+              
+
+
+
+
+
+
+
+
+
+
+
+
+               })
+
+  k++;
+
+
+})
+function clr()
+{
+   for(let i=0;i<data.length;i++)
+   {
+       delete data[i];
+   }
+   
+    console.log(data);
+    
+    major.innerHTML="";
+}
+clear.addEventListener("click",clr);
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

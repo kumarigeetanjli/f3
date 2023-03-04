@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>my</title>
+</head>
+<style>
+body
+{
+    background-color: black;
+    color:white;
+    
+}
+#main
+{
+    justify-content: space-between;
+    color: aliceblue
+}
+
+
+
+#smm
+{
+    display:flex;
+    flex-wrap: wrap;
+    height: 300px;
+    width: 1000px;
+   
+}
+
+
+#msmin
+{
+    display:flex;
+    flex-wrap: wrap;
+    height: 380px;
+    width: 950px;
+    
+}
+
+
+button{
+  position: absolute;
+  top:60px;
+  
+  height:35px;
+  width:35px;
+  right: 90px;
+  
+}
+
+
+</style>
+<body>
+    <h3>Book App</h3>
+    
+    <h1> Searched </h1>
+    <button id="clr">Clear Search</button>
+
+<a href="./index.html">Landing Page</a>
+    <div id="sm"></div>
+    <div id="msmin"></div>
+</body>
+<script >
+fetch('https://www.googleapis.com/books/v1/volumes?q=percy+jackson').then((apidata)=>{
+     console.log(apidata);
+
+      return apidata.json();
+
+        })
+
+.then((actualdata)=>{
+ 
+ let mindiv=document.getElementById("msmin")
+         
+  let count=0;
+  
+let clear=document.getElementById("clr");
+  let major=document.getElementById("sm");
+let data = JSON.parse(localStorage.getItem('data'));
+
+let k=0;
+data.forEach((item)=> {
+    let sk=document.createElement('div');
+    sk.innerHTML=`
+    ${k} ${data[k].search}  &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp    search at  ${data[k].date}
+   
+    
+    
+    `
+
+    k++;
+    var searchvalue=data[k].search;
+    sk.style.border="3px solid grey";
+    sk.style.width="930px";
+    sk.style.height="30px";
+    
+  major.append(sk);
+
+})
+
+  //k++;
+
+
+
+function clr()
+{
+   for(let i=0;i<data.length;i++)
+   {
+       delete data[i];
+   }
+   
+   
+    
+    major.innerHTML="";
+}
+clear.addEventListener("click",clr);
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+</script>
+</html>
